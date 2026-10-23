@@ -39,13 +39,13 @@ const TodayDecreasedProducts = async() => {
           <span className='text-green-500'>▼</span> আজ দাম কমেছে
         </h2>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 ">
           {topSix.map((item) => {
             const isUrl = item.image?.startsWith("http");
             return (
               <div
                 key={item.id}
-                className="rounded-2xl border border-gray-200 bg-[#fafcfa] p-5"
+                className="rounded-2xl border border-gray-200 bg-[#fafcfa] p-5 border-white transition-all duration-300 hover:border-[2px] hover:border-green-800"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-3xl">
