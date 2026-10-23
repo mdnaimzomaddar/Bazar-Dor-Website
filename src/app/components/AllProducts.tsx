@@ -47,9 +47,15 @@ const AllProducts = async () => {
             const isUp = item.change?.dir === "up";
             const isUrl = item.image?.startsWith("http");
             return (
-              <div
+              
+              <Link
                 key={item.id}
-                className="rounded-2xl border border-gray-200 bg-[#fafcfa] p-5 border-[2px] border-white transition-all duration-300 hover:border-[2px] hover:border-green-800"
+                href={`/product/${item.id}`}
+                className="block rounded-2xl border border-gray-200 bg-[#fafcfa] p-5 transition hover:shadow-md  border-white transition-all duration-300 hover:border-[2px] hover:border-green-800"
+              >
+                  <div
+                key={item.id}
+                className="rounded-2xl bg-[#fafcfa] p-5"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-3xl">
@@ -91,6 +97,8 @@ const AllProducts = async () => {
                   </span>
                 </div>
               </div>
+              </Link>
+              
             );
           })}
         </div>

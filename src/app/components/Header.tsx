@@ -42,7 +42,8 @@ const Header = () => {
     <header className="w-full border-b bg-white shadow-sm">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-4 py-3 gap-4">
         {/* Left/Logo Section */}
-        <div className="logo flex justify-center items-center gap-3">
+        <Link href={"/"}>
+          <div className="logo flex justify-center items-center gap-3">
           <Image
             className="w-12 h-12 bg-green-800 rounded p-[8px]"
             src={"/logo-icon.png"}
@@ -57,6 +58,7 @@ const Header = () => {
             <p className="text-sm text-gray-600">{currentTime || "লোড হচ্ছে..."}</p>
           </div>
         </div>
+        </Link>
 
         {/* Auth Buttons / Userinfo Section */}
         <div className="flex items-center gap-2">
