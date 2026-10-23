@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import Markquee from "./Markquee";
 
 interface Category {
   id: string;
@@ -63,21 +65,25 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Category Section (API থেকে ফেচ করা ক্যাটাগরিগুলো এখানে স্ক্রলবল বা ফ্লেক্স আকারে দেখাবে) */}
+      {/* Category bar */}
       <div className="max-w-7xl mx-auto px-4 py-2 border-t border-gray-100 overflow-x-auto">
         {loading ? (
           <p className="text-sm text-gray-500 py-1">ক্যাটাগরি লোড হচ্ছে...</p>
         ) : (
           <div className="flex items-center gap-6 whitespace-nowrap py-1">
-            {categories.map((category) => (
-              <button
-                key={category.id || category.nameBn}
-                className="flex items-center gap-2 text-sm text-gray-700 hover:text-[#05893e] transition-colors cursor-pointer"
-              >
-                {category.icon && <span>{category.icon}</span>}
-                <span className="font-medium text-black">{category.nameBn}</span>
-              </button>
-            ))}
+            {categories.map((category) => {
+              const slug = category.slug ?? category.id;
+              return (
+                <Link
+                  key={slug || category.nameBn}
+                  href={`/category/${slug}`}
+                  className="flex items-center gap-2 text-sm text-gray-700 hover:text-[#05893e] transition-colors"
+                >
+                  {category.icon && <span>{category.icon}</span>}
+                  <span className="font-medium text-black">{category.nameBn}</span>
+                </Link>
+              );
+            })}
           </div>
         )}
       </div>
@@ -85,4 +91,4 @@ const Header = () => {
   );
 };
 
-export default Header; // (এখানে শুধু export default Header; হবে)
+export default Header;

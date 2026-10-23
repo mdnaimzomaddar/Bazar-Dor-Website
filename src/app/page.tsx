@@ -12,9 +12,9 @@ const Loading = ({ text }: { text: string }) => (
 export default function Home() {
   return (
     <>
-      <Suspense fallback={<Loading text="বাজার দর লোড হচ্ছে..." />}>
-        <Markquee />
-      </Suspense>
+      {/* <Suspense fallback={<Loading text="বাজার দর লোড হচ্ছে..." />}>
+        
+      </Suspense> */}
 
       <HeroSection />
 
