@@ -6,6 +6,7 @@ import Navbar from "./components/Header";
 import Markquee from "./components/Markquee";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
+import ToastProvider from "./components/ToastProvider";
 
 const hindSiliguri = Hind_Siliguri({
   subsets: ["bengali", "latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="flex-1">{children}</main>
         <Footer />
         <ToastContainer />
+        <ToastProvider />
       </body>
     </html>
   );

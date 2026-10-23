@@ -33,7 +33,7 @@ const HeroSection = () => {
           </p>
 
           <Link
-            href="/products"
+            href="#all-products"
             className="rounded-lg bg-green-700 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-green-800"
           >
             সব পণ্য দেখুন

@@ -21,7 +21,7 @@ export default function Home() {
       <Suspense fallback={<Loading text="লোড হচ্ছে..." />}>
         <TodayIncresedProducts />
         <TodayDecreasedProducts />
-        <AllProducts />
+        <AllProducts  />
       </Suspense>
     </>
   );
