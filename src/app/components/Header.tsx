@@ -2,7 +2,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Markquee from "./Markquee";
+import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 interface Category {
   id: string;
@@ -12,6 +13,9 @@ interface Category {
 }
 
 const Header = () => {
+  const router = useRouter();
+  const { data: session, isPending } = authClient.useSession();
+
   const [currentTime, setCurrentTime] = useState<string>("");
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -23,9 +27,11 @@ const Header = () => {
       })
     );
 
-    const Categories = async () => {
+    const loadCategories = async () => {
       try {
-        const res = await fetch("https://openapi.programming-hero.com/api/bazardor/categories");
+        const res = await fetch(
+          "https://openapi.programming-hero.com/api/bazardor/categories"
+        );
         const data = await res.json();
         setCategories(data.data || data);
       } catch (error) {
@@ -35,35 +41,69 @@ const Header = () => {
       }
     };
 
-    Categories();
+    loadCategories();
   }, []);
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+    router.push("/");
+    router.refresh();
+  };
 
   return (
     <header className="w-full border-b bg-white shadow-sm">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-4 py-3 gap-4">
         {/* Left/Logo Section */}
-        <Link href={"/"}>
+        <Link href="/">
           <div className="logo flex justify-center items-center gap-3">
-          <Image
-            className="w-12 h-12 bg-green-800 rounded p-[8px]"
-            src={"/logo-icon.png"}
-            alt="Logo"
-            height={50}
-            width={50}
-          />
-          <div>
-            <h2 className="text-[20px] text-black font-bold leading-tight">
-              বাজার দর
-            </h2>
-            <p className="text-sm text-gray-600">{currentTime || "লোড হচ্ছে..."}</p>
+            <Image
+              className="w-12 h-12 bg-green-800 rounded p-[8px]"
+              src={"/logo-icon.png"}
+              alt="Logo"
+              height={50}
+              width={50}
+            />
+            <div>
+              <h2 className="text-[20px] text-black font-bold leading-tight">
+                বাজার দর
+              </h2>
+              <p className="text-sm text-gray-600">
+                {currentTime || "লোড হচ্ছে..."}
+              </p>
+            </div>
           </div>
-        </div>
         </Link>
 
         {/* Auth Buttons / Userinfo Section */}
         <div className="flex items-center gap-2">
-          <button className="btn btn-ghost text-black hover:text-white">সাইন ইন</button>
-          <button className="btn btn-active btn-success bg-[#05893e] text-white">সাইন আপ</button>
+          {isPending ? null : session ? (
+            <div className="flex items-center gap-3">
+              <Link href="/profile" className="text-sm font-medium text-black hover:text-[#05893e]">
+                {session.user.name}
+              </Link>
+              <button
+                onClick={handleSignOut}
+                className="btn btn-ghost text-black"
+              >
+                সাইন আউট
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link
+                href="/signin"
+                className="btn btn-ghost text-black hover:text-white"
+              >
+                সাইন ইন
+              </Link>
+              <Link
+                href="/signup"
+                className="btn btn-active btn-success bg-[#05893e] text-white"
+              >
+                সাইন আপ
+              </Link>
+            </>
+          )}
         </div>
       </div>
 
@@ -82,7 +122,9 @@ const Header = () => {
                   className="flex items-center gap-2 text-sm text-gray-700 hover:text-[#05893e] transition-colors"
                 >
                   {category.icon && <span>{category.icon}</span>}
-                  <span className="font-medium text-black">{category.nameBn}</span>
+                  <span className="font-medium text-black">
+                    {category.nameBn}
+                  </span>
                 </Link>
               );
             })}
