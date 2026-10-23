@@ -1,13 +1,17 @@
+// app/layout.tsx
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Hind_Siliguri } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Header";
+import { ToastContainer } from "react-toastify";
+import Markquee from "./components/Markquee";
+import HeroSection from "./components/HeroSection";
 
 const hindSiliguri = Hind_Siliguri({
   subsets: ["bengali", "latin"],
   weight: ["300", "400", "500", "600", "700"],
 });
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,13 +20,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${hindSiliguri.className} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">
-        <Navbar></Navbar>
+    <html lang="en" className={`${hindSiliguri.className} h-full antialiased`}>
+      <body className="min-h-full flex flex-col" suppressHydrationWarning>
+        <Navbar />
+        <Suspense
+          fallback={
+            <div className="bg-white py-2 text-center text-sm text-gray-500">
+              বাজার দর লোড হচ্ছে...
+            </div>
+          }
+        >
+          <Markquee />
+        </Suspense>
+        <HeroSection />
         {children}
+        <ToastContainer />
       </body>
     </html>
   );

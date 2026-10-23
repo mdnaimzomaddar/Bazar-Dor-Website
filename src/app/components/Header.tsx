@@ -2,10 +2,17 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 
-// import Userinfo from "./Userinfo";
+interface Category {
+  id: string;
+  nameBn: string;
+  icon?: string;
+  slug?: string;
+}
 
 const Header = () => {
   const [currentTime, setCurrentTime] = useState<string>("");
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     setCurrentTime(
@@ -13,13 +20,21 @@ const Header = () => {
         dateStyle: "full",
       })
     );
-  }, []);
 
-  const categori = async() =>{
-    const ref = await fetch('https://openapi.programming-hero.com/api/bazardor/categories')
-    const data = await ref.json()
-    console.log(data)
-  }
+    const Categories = async () => {
+      try {
+        const res = await fetch("https://openapi.programming-hero.com/api/bazardor/categories");
+        const data = await res.json();
+        setCategories(data.data || data);
+      } catch (error) {
+        console.error("Failed to fetch categories:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    Categories();
+  }, []);
 
   return (
     <header className="w-full border-b bg-white shadow-sm">
@@ -42,18 +57,32 @@ const Header = () => {
         </div>
 
         {/* Auth Buttons / Userinfo Section */}
-        {/* <Userinfo /> */}
         <div className="flex items-center gap-2">
           <button className="btn btn-ghost text-black hover:text-white">সাইন ইন</button>
           <button className="btn btn-active btn-success bg-[#05893e] text-white">সাইন আপ</button>
         </div>
       </div>
 
-      <div>
-        
+      {/* Category Section (API থেকে ফেচ করা ক্যাটাগরিগুলো এখানে স্ক্রলবল বা ফ্লেক্স আকারে দেখাবে) */}
+      <div className="max-w-7xl mx-auto px-4 py-2 border-t border-gray-100 overflow-x-auto">
+        {loading ? (
+          <p className="text-sm text-gray-500 py-1">ক্যাটাগরি লোড হচ্ছে...</p>
+        ) : (
+          <div className="flex items-center gap-6 whitespace-nowrap py-1">
+            {categories.map((category) => (
+              <button
+                key={category.id || category.nameBn}
+                className="flex items-center gap-2 text-sm text-gray-700 hover:text-[#05893e] transition-colors cursor-pointer"
+              >
+                {category.icon && <span>{category.icon}</span>}
+                <span className="font-medium text-black">{category.nameBn}</span>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </header>
   );
 };
 
-export default Header;
+export default Header; // (এখানে শুধু export default Header; হবে)
