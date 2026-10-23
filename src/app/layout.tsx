@@ -7,6 +7,8 @@ import Navbar from "./components/Header";
 import { ToastContainer } from "react-toastify";
 import Markquee from "./components/Markquee";
 import HeroSection from "./components/HeroSection";
+import TodayIncresedProducts from "./components/TodayIncresedProducts";
+import TodayDecreasedProducts from "./components/TodayDecreasedProducts";
 
 const hindSiliguri = Hind_Siliguri({
   subsets: ["bengali", "latin"],
@@ -33,6 +35,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Markquee />
         </Suspense>
         <HeroSection />
+        <TodayIncresedProducts />
+        <TodayDecreasedProducts />
         {children}
         <ToastContainer />
       </body>
