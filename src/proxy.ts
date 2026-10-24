@@ -1,12 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "./lib/auth";
+import { getSessionCookie } from "better-auth/cookies";
 
-export async function proxy(request: NextRequest) {
-  const session = await auth.api.getSession({
-    headers: request.headers,
-  });
+export function proxy(request: NextRequest) {
+  const sessionCookie = getSessionCookie(request);
 
-  if (!session?.user) {
+  if (!sessionCookie) {
     const signInUrl = new URL("/signin", request.url);
     signInUrl.searchParams.set("callbackURL", request.nextUrl.pathname);
     return NextResponse.redirect(signInUrl);
