@@ -1,4 +1,4 @@
-// src/lib/auth.ts
+
 import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { MongoClient } from "mongodb";
@@ -9,13 +9,13 @@ if (!process.env.BETTER_AUTH_DB_URL) {
 
 const uri = process.env.BETTER_AUTH_DB_URL;
 const options = {
-  serverSelectionTimeoutMS: 8000, // ৩২ সেকেন্ডের বদলে ৮ সেকেন্ডে error দেবে
+  serverSelectionTimeoutMS: 8000, 
   connectTimeoutMS: 10000,
   family: 4,
 };
 
 declare global {
-  // eslint-disable-next-line no-var
+
   var _mongoClient: MongoClient | undefined;
 }
 
@@ -26,6 +26,11 @@ const db = client.db("bazar-dor-website");
 
 export const auth = betterAuth({
   database: mongodbAdapter(db, { client }),
+  baseURL: process.env.BETTER_AUTH_URL,
+  trustedOrigins: [
+    "http://localhost:3000",
+    "https://bazar-dor-ph-b14-a7.netlify.app",
+  ],
   emailAndPassword: {
     enabled: true,
   },
