@@ -16,6 +16,9 @@ const hindSiliguri = Hind_Siliguri({
 export const metadata: Metadata = {
   title: "বাজার দর",
   description: "প্রয়োজনীয় পণ্যের দাম এক নজরে",
+  icons: {
+    icon: "/bazar-hero.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
