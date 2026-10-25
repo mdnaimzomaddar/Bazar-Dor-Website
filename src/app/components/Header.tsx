@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import CategoryLink from "./CategoryLink";
 
 interface Category {
   id: string;
@@ -14,7 +15,6 @@ interface Category {
 
 const Header = () => {
   const router = useRouter();
-  const pathname = usePathname();
   const { data: session, isPending } = authClient.useSession();
 
   const [currentTime, setCurrentTime] = useState<string>("");
@@ -117,32 +117,21 @@ const Header = () => {
           <p className="text-sm text-gray-500 py-1">ক্যাটাগরি লোড হচ্ছে...</p>
         ) : (
           <div className="flex items-center gap-3 whitespace-nowrap py-1">
-            {categories.map((category) => {
-              const slug = category.slug ?? category.id;
-              const href = `/category/${slug}`;
-              const isActive = pathname === href;
-
-              return (
-                <Link
-                  key={slug || category.nameBn}
-                  href={href}
-                  className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-colors ${
-                    isActive
-                      ? "bg-green-700 text-white"
-                      : "text-gray-700 hover:text-[#05893e] active:bg-green-700 active:text-white"
-                  }`}
-                >
-                  {category.icon && <span>{category.icon}</span>}
-                  <span
-                    className={`font-medium ${
-                      isActive ? "text-white" : "text-black"
-                    }`}
-                  >
-                    {category.nameBn}
-                  </span>
-                </Link>
-              );
-            })}
+            <Suspense
+              fallback={<span className="text-sm text-gray-400">...</span>}
+            >
+              {categories.map((category) => {
+                const slug = category.slug ?? category.id;
+                return (
+                  <CategoryLink
+                    key={slug || category.nameBn}
+                    href={`/category/${slug}`}
+                    icon={category.icon}
+                    name={category.nameBn}
+                  />
+                );
+              })}
+            </Suspense>
           </div>
         )}
       </div>
