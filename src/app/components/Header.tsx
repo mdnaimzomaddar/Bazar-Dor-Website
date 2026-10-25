@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 
 interface Category {
@@ -14,6 +14,7 @@ interface Category {
 
 const Header = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const { data: session, isPending } = authClient.useSession();
 
   const [currentTime, setCurrentTime] = useState<string>("");
@@ -78,7 +79,10 @@ const Header = () => {
         <div className="flex items-center gap-2">
           {isPending ? null : session ? (
             <div className="flex items-center gap-3">
-              <Link href="/profile" className="text-sm font-medium text-black hover:text-[#05893e]">
+              <Link
+                href="/profile"
+                className="text-sm font-medium text-black hover:text-[#05893e]"
+              >
                 {session.user.name}
               </Link>
               <button
@@ -112,17 +116,28 @@ const Header = () => {
         {loading ? (
           <p className="text-sm text-gray-500 py-1">ক্যাটাগরি লোড হচ্ছে...</p>
         ) : (
-          <div className="flex items-center gap-6 whitespace-nowrap py-1">
+          <div className="flex items-center gap-3 whitespace-nowrap py-1">
             {categories.map((category) => {
               const slug = category.slug ?? category.id;
+              const href = `/category/${slug}`;
+              const isActive = pathname === href;
+
               return (
                 <Link
                   key={slug || category.nameBn}
-                  href={`/category/${slug}`}
-                  className="flex items-center gap-2 text-sm text-gray-700 hover:text-[#05893e] transition-colors"
+                  href={href}
+                  className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm transition-colors ${
+                    isActive
+                      ? "bg-green-700 text-white"
+                      : "text-gray-700 hover:text-[#05893e] active:bg-green-700 active:text-white"
+                  }`}
                 >
                   {category.icon && <span>{category.icon}</span>}
-                  <span className="font-medium text-black">
+                  <span
+                    className={`font-medium ${
+                      isActive ? "text-white" : "text-black"
+                    }`}
+                  >
                     {category.nameBn}
                   </span>
                 </Link>
