@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 বাজার দর 
 
-## Getting Started
+**আজকের বাজারের দাম এক নজরে**
+Track daily essential commodity prices across Bangladesh's markets, in Bangla.
 
-First, run the development server:
+🌐 Live Demo https://bazar-dor-ph-b14-a7.netlify.app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# 📖 About
+
+**BazarDor (বাজার দর)** is a fully Bangla web app that shows the daily prices of
+essential items such as rice, lentils, oil, vegetables, fish, meat, eggs and
+spices. You can see what got more expensive or cheaper today, compare prices
+across markets in different divisions, and browse everything by category.
+
+## 🛠️ Tech Stack
+
+| Area | Technology |
+| --- | --- |
+| Framework | Next.js 16 (App Router, Server Components, Suspense) |
+| Language | TypeScript |
+| UI | React 19, Tailwind CSS, daisyUI |
+| Authentication | Better Auth (Email/Password, Google, GitHub) |
+| Database | MongoDB Atlas |
+| Notifications | react-toastify |
+| Font | Hind Siliguri (Bangla) |
+| Data | BazarDor REST API |
+| Deployment | Netlify |
+
+# ✨ Key Features
+
+1. **📈 Live Price Ticker**
+   A scrolling marquee at the top of every page shows each product's current price with a ▲ / ▼ percentage change.
+
+2. **🔺🔻 Today's Price Movers**
+   Dedicated sections highlight the top 6 products whose prices increased and decreased today, plus a full list of all products.
+
+3. **🗂️ Category Browsing & Sorting**
+   Browse products by category (চাল, ডাল, তেল, সবজি, মাছ, মাংস and more) and sort by price or by the size of the change.
+
+4. **🏪 Market-wise Price Comparison**
+   Each product page shows the lowest, highest and average price, with a table of prices across markets and divisions.
+
+5. **🔐 Authentication & Profile**
+   Sign up and sign in with email/password, Google or GitHub. Product pages and the profile page are protected, and users can update their name.
+
+> All numbers, dates and units are localized to Bangla (e.g. `১২০ টাকা/কেজি`).
+
+## 📁 Project Structure
+
+```
+src/
+├── app/
+│   ├── api/auth/[...all]/   # Better Auth route handler
+│   ├── category/[slug]/     # Category page with sorting
+│   ├── product/[slug]/      # Product detail page
+│   ├── profile/             # User profile
+│   ├── signin/  signup/     # Auth pages
+│   ├── components/          # Header, Markquee, HeroSection, Footer ...
+│   ├── layout.tsx
+│   └── page.tsx             # Home page
+├── lib/
+│   ├── auth.ts              # Better Auth server config
+│   └── auth-client.ts       # Better Auth client
+└── proxy.ts                 # Route protection
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 👨‍💻 Author
 
-## Learn More
+**M Naim Zomaddar**
+GitHub: [@mdnaimzomaddar](https://github.com/mdnaimzomaddar)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🌐 Live Demo https://bazar-dor-ph-b14-a7.netlify.app

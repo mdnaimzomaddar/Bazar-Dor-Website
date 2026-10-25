@@ -26,7 +26,7 @@ interface Product {
 const toBn = (value: number | string | undefined) =>
   String(value ?? "").replace(/\d/g, (d) => "০১২৩৪৫৬৭৮৯"[Number(d)]);
 
-// 63.5 -> ৬৩.৫০, 62 -> ৬২
+
 const fmt = (n: number) => toBn(Number.isInteger(n) ? n : n.toFixed(2));
 
 const unitBn: Record<string, string> = {
