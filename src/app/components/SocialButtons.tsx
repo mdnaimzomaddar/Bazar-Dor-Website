@@ -8,7 +8,11 @@ const SocialButtons = () => {
       provider,
       callbackURL: "/",
     });
-    if (error) toast.error(error.message || "লগইন করা যায়নি");
+    if (error){
+      toast.error(error.message || "লগইন করা যায়নি");
+    } else{
+      toast.success("লগইন ইন সফল হয়েছে");
+    }
   };
 
   return (
